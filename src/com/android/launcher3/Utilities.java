@@ -137,6 +137,8 @@ public final class Utilities {
 
     private static final long WAIT_BEFORE_RESTART = 250;
 
+    public static final String KEY_SHOW_SEARCHBAR = "pref_show_searchbar";
+
     /**
      * Indicates if the device has a debug build. Should only be used to store additional info or
      * add extra logging and not for changing the app behavior.
@@ -707,10 +709,14 @@ public final class Utilities {
 
     public static boolean showQSB(Context context) {
         SharedPreferences prefs = getPrefs(context.getApplicationContext());
+        boolean showQuickSearch = prefs.getBoolean(KEY_SHOW_SEARCHBAR, false);
+        if (!showQuickSearch) {
+            return false;
+        }
         if (!LauncherAppState.getInstanceNoCreate().isSearchAppAvailable()) {
             return false;
         }
-	return true;
+        return true;
     }
 
     public static boolean isDoubleTapGestureEnabled(Context context) {

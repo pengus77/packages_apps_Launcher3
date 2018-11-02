@@ -104,7 +104,9 @@ public class SettingsActivity extends FragmentActivity
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         if (Utilities.KEY_DT_GESTURE.equals(key)) {
                 LauncherAppState.getInstanceNoCreate().setNeedsRestart();
-        }
+        } else if (Utilities.KEY_SHOW_SEARCHBAR.equals(key)) {
+                LauncherAppState.getInstanceNoCreate().setNeedsRestart();
+	}
     }
 
     @Override
