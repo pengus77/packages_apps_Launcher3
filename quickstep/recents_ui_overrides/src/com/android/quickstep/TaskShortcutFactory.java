@@ -26,9 +26,11 @@ import static com.android.launcher3.userevent.nano.LauncherLogProto.Action.Touch
 
 import android.app.Activity;
 import android.app.ActivityOptions;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Rect;
+import android.net.Uri;
 import android.os.Handler;
 import android.os.Looper;
 import android.view.View;
@@ -43,6 +45,7 @@ import com.android.launcher3.popup.SystemShortcut.AppInfo;
 import com.android.launcher3.userevent.nano.LauncherLogProto;
 import com.android.launcher3.util.Executors;
 import com.android.launcher3.util.InstantAppResolver;
+import com.android.launcher3.Utilities;
 import com.android.quickstep.views.RecentsView;
 import com.android.quickstep.views.TaskThumbnailView;
 import com.android.quickstep.views.TaskView;
@@ -316,6 +319,46 @@ public interface TaskShortcutFactory {
                 .getScreenshotShortcut(activity, tv.getItemInfo());
         }
         return null;
+    };
+
+    class UninstallSystemShortcut extends SystemShortcut {
+        private static final String TAG = "UninstallSystemShortcut";
+        private final TaskView mTaskView;
+        private final BaseDraggingActivity mActivity;
+        private final String mPackageName;
+
+        public UninstallSystemShortcut(BaseDraggingActivity activity, TaskView tv, String packageName) {
+            super(R.drawable.ic_uninstall_no_shadow, R.string.uninstall_drop_target_label, activity, tv.getItemInfo());
+            mTaskView = tv;
+            mActivity = activity;
+            mPackageName = packageName;
+        }
+
+        @Override
+        public void onClick(View view) {
+            Consumer<Boolean> resultCallback = success -> {
+                if (success) {
+                    Intent intent = new Intent(Intent.ACTION_UNINSTALL_PACKAGE);
+                    intent.setData(Uri.parse("package:" + mPackageName));
+                    intent.putExtra(Intent.EXTRA_RETURN_RESULT, true);
+                    mActivity.startActivity(intent);
+                } else {
+                    mTaskView.notifyTaskLaunchFailed(TAG);
+                }   
+            };  
+
+            mTaskView.launchTask(true, resultCallback, Executors.MAIN_EXECUTOR.getHandler());
+            dismissTaskMenuView(mActivity);
+        }
+    }
+
+    TaskShortcutFactory UNINSTALL = (activity, tv) -> {
+        String packageName = tv.getItemInfo().getTargetComponent().getPackageName();
+        boolean isSystemApp = Utilities.isSystemApp(activity.getApplicationContext(), packageName);
+        if (isSystemApp) {
+            return null;
+        }
+	return new UninstallSystemShortcut(activity, tv, packageName);
     };
 
     TaskShortcutFactory MODAL = (activity, tv) -> {
