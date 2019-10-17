@@ -33,6 +33,8 @@ import android.os.UserHandle;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.android.launcher3.IconPack;
+import com.android.launcher3.IconPackProvider;
 import com.android.launcher3.R;
 import com.android.launcher3.icons.BitmapInfo.Extender;
 import com.android.launcher3.pm.UserCache;
@@ -87,6 +89,17 @@ public class IconProvider {
         }
     }
 
+    private Drawable getIconFromPack(LauncherActivityInfo info) {
+        IconPack iconPack = IconPackProvider.loadAndGetIconPack(mContext);
+        if (iconPack != null) {
+            Drawable iconMask = iconPack.getIcon(info, null, info.getLabel());
+            if (iconMask != null) {
+                return iconMask;
+            }
+        }
+        return null;
+    }
+
     /**
      * Loads the icon for the provided LauncherActivityInfo such that it can be drawn directly
      * on the UI
@@ -118,13 +131,8 @@ public class IconProvider {
     private <T, P> Drawable getIcon(String packageName, UserHandle user, T obj, P param,
             BiFunction<T, P, Drawable> loader) {
         Drawable icon = null;
-        if (mCalendar != null && mCalendar.getPackageName().equals(packageName)) {
-            icon = loadCalendarDrawable(0);
-        } else if (mClock != null
-                && mClock.getPackageName().equals(packageName)
-                && Process.myUserHandle().equals(user)) {
-            icon = loadClockDrawable(0);
-        }
+        if (obj instanceof LauncherActivityInfo)
+            icon = getIconFromPack((LauncherActivityInfo)obj);
         return icon == null ? loader.apply(obj, param) : icon;
     }
 

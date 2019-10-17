@@ -108,6 +108,7 @@ public class InvariantDeviceProfile implements OnSharedPreferenceChangeListener 
     public int numFolderColumns;
     public float iconSize;
     public String iconShapePath;
+    public String iconPack;
     public float landscapeIconSize;
     public int iconBitmapSize;
     public int fillResIconDpi;
@@ -153,6 +154,7 @@ public class InvariantDeviceProfile implements OnSharedPreferenceChangeListener 
         numFolderColumns = p.numFolderColumns;
         iconSize = p.iconSize;
         iconShapePath = p.iconShapePath;
+        iconPack = p.iconPack;
         landscapeIconSize = p.landscapeIconSize;
         iconBitmapSize = p.iconBitmapSize;
         iconTextSize = p.iconTextSize;
@@ -271,6 +273,7 @@ public class InvariantDeviceProfile implements OnSharedPreferenceChangeListener 
 
         mExtraAttrs = closestProfile.extraAttrs;
 
+        iconPack = IconPackProvider.getCurrentIconPack(context);
         iconSize = (float)Utilities.getIconsSize(context, displayOption.iconSize);
         iconShapePath = getIconShapePath(context);
         landscapeIconSize = displayOption.landscapeIconSize;
@@ -372,7 +375,7 @@ public class InvariantDeviceProfile implements OnSharedPreferenceChangeListener 
         }
 
         if (iconSize != oldProfile.iconSize || iconBitmapSize != oldProfile.iconBitmapSize ||
-                !iconShapePath.equals(oldProfile.iconShapePath)) {
+                !iconShapePath.equals(oldProfile.iconShapePath) || !iconPack.equals(oldProfile.iconPack)) {
             changeFlags |= CHANGE_FLAG_ICON_PARAMS;
         }
         if (!iconShapePath.equals(oldProfile.iconShapePath)) {
