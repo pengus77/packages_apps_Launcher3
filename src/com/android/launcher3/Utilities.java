@@ -142,6 +142,7 @@ public final class Utilities {
     private static final long WAIT_BEFORE_RESTART = 250;
 
     public static final String KEY_SHOW_SEARCHBAR = "pref_show_searchbar";
+    public static final String SHOW_ONLY_RUNNING_APPS = "pref_only_show_running_in_recents";
 
     /**
      * Indicates if the device has a debug build. Should only be used to store additional info or
@@ -789,6 +790,10 @@ public final class Utilities {
     public static boolean isDoubleTapGestureEnabled(Context context) {
         SharedPreferences prefs = getPrefs(context.getApplicationContext());
         return prefs.getBoolean(KEY_DT_GESTURE, true);
+    }
+
+    public static boolean showOnlyRunningApps(Context context) {
+	return getPrefs(context).getBoolean(SHOW_ONLY_RUNNING_APPS, false);
     }
 
     public static void restart(final Context context) {

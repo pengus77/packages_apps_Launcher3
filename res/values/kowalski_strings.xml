@@ -60,4 +60,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <string name="desktop_show_labels">Show icon labels on desktop</string>
     <string name="drawer_show_labels">Show icon labels in drawer</string>
 
+    <!-- Only show running apps in recents -->
+    <string name="only_show_running_in_recents_title">Only show running apps in recents</string>
+    <string name="only_show_running_in_recents_desc">Exclude all non running applications from the recents view</string>
 </resources>

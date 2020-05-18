@@ -20,12 +20,14 @@ import static com.android.launcher3.util.Executors.UI_HELPER_EXECUTOR;
 
 import android.annotation.TargetApi;
 import android.app.ActivityManager;
+import android.content.Context;
 import android.os.Build;
 import android.os.Process;
 import android.util.SparseBooleanArray;
 
 import androidx.annotation.VisibleForTesting;
 
+import com.android.launcher3.Utilities;
 import com.android.launcher3.util.LooperExecutor;
 import com.android.systemui.shared.recents.model.Task;
 import com.android.systemui.shared.system.ActivityManagerWrapper;
@@ -36,6 +38,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 /**
  * Manages the recent task list from the system, caching it as necessary.
@@ -48,6 +51,7 @@ public class RecentTasksList extends TaskStackChangeListener {
     private final KeyguardManagerCompat mKeyguardManager;
     private final LooperExecutor mMainThreadExecutor;
     private final ActivityManagerWrapper mActivityManagerWrapper;
+    private final Context mContext;
 
     // The list change id, increments as the task list changes in the system
     private int mChangeId;
@@ -56,12 +60,14 @@ public class RecentTasksList extends TaskStackChangeListener {
     private TaskLoadResult mResultsUi = INVALID_RESULT;
 
     public RecentTasksList(LooperExecutor mainThreadExecutor,
-            KeyguardManagerCompat keyguardManager, ActivityManagerWrapper activityManagerWrapper) {
+            KeyguardManagerCompat keyguardManager, ActivityManagerWrapper activityManagerWrapper,
+	    Context context) {
         mMainThreadExecutor = mainThreadExecutor;
         mKeyguardManager = keyguardManager;
         mChangeId = 1;
         mActivityManagerWrapper = activityManagerWrapper;
         mActivityManagerWrapper.registerTaskStackListener(this);
+	mContext = context;
     }
 
     /**
@@ -181,8 +187,12 @@ public class RecentTasksList extends TaskStackChangeListener {
             }
         };
 
+	boolean onlyShowRunning = Utilities.showOnlyRunningApps(mContext);
+
         TaskLoadResult allTasks = new TaskLoadResult(requestId, loadKeysOnly, rawTasks.size());
         for (ActivityManager.RecentTaskInfo rawTask : rawTasks) {
+            if (onlyShowRunning && !rawTask.isRunning) continue;
+
             Task.TaskKey taskKey = new Task.TaskKey(rawTask);
             Task task;
             if (!loadKeysOnly) {

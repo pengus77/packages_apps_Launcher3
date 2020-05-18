@@ -63,6 +63,13 @@
         android:title="@string/title_show_google_app"
         android:persistent="true"/>
 
+    <SwitchPreference      
+        android:key="pref_only_show_running_in_recents"
+        android:title="@string/only_show_running_in_recents_title"
+        android:summary="@string/only_show_running_in_recents_desc"
+        android:defaultValue="@bool/only_show_running_in_recents"
+        android:persistent="true" />
+
     <Preference
         android:key="pref_trust_apps"
         android:title="@string/trust_apps_manager_name"
