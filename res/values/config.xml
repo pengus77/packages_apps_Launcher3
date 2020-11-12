@@ -59,7 +59,7 @@
     <bool name="hotseat_transpose_layout_with_orientation">true</bool>
 
     <!-- Various classes overriden by projects/build flavors. -->
-    <string name="app_filter_class" translatable="false"></string>
+    <string name="app_filter_class" translatable="false">com.android.launcher3.trust.HiddenAppsFilter</string>
     <string name="user_event_dispatcher_class" translatable="false"></string>
     <string name="folder_name_provider_class" translatable="false"></string>
     <string name="stats_log_manager_class" translatable="false"></string>
@@ -89,7 +89,7 @@
     <integer name="config_removeNotificationViewDuration">300</integer>
 
     <!-- Default packages -->
-    <string name="wallpaper_picker_package" translatable="false"></string>
+    <string name="wallpaper_picker_package" translatable="false">com.android.wallpaper</string>
     <string name="calendar_component_name" translatable="false"></string>
     <string name="clock_component_name" translatable="false"></string>
 

@@ -56,6 +56,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
+import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,6 +64,7 @@ import android.view.ViewTreeObserver;
 import android.view.accessibility.AccessibilityNodeInfo;
 import android.widget.Toast;
 
+import com.android.internal.util.arrow.ArrowUtils;
 import com.android.launcher3.LauncherAppWidgetHost.ProviderChangedListener;
 import com.android.launcher3.accessibility.AccessibleDragListenerAdapter;
 import com.android.launcher3.accessibility.WorkspaceAccessibilityHelper;
@@ -254,6 +256,7 @@ public class Workspace extends PagedView<WorkspacePageIndicator>
     private final WorkspaceStateTransitionAnimation mStateTransitionAnimation;
 
     private final StatsLogManager mStatsLogManager;
+    private GestureDetector mGestureListener;
 
     /**
      * Used to inflate the Workspace from XML.
@@ -286,8 +289,24 @@ public class Workspace extends PagedView<WorkspacePageIndicator>
 
         // Disable multitouch across the workspace/all apps/customize tray
         setMotionEventSplittingEnabled(true);
+
+        context.enforceCallingOrSelfPermission(
+                    android.Manifest.permission.DEVICE_POWER, null);
+        mGestureListener =
+                new GestureDetector(context, new GestureDetector.SimpleOnGestureListener() {
+            @Override
+            public boolean onDoubleTap(MotionEvent event) {
+                ArrowUtils.switchScreenOff(context);
+                return true;
+            }
+        });
+
         setOnTouchListener(new WorkspaceTouchListener(mLauncher, this));
         mStatsLogManager = StatsLogManager.newInstance(context);
+    }
+
+    public boolean checkDoubleTap(MotionEvent ev) {
+        return mGestureListener.onTouchEvent(ev);
     }
 
     @Override
@@ -498,7 +517,7 @@ public class Workspace extends PagedView<WorkspacePageIndicator>
      * @param qsb an existing qsb to recycle or null.
      */
     public void bindAndInitFirstWorkspaceScreen(View qsb) {
-        if (!FeatureFlags.QSB_ON_FIRST_SCREEN) {
+        if (!Utilities.showQSB(getContext())) {
             return;
         }
         // Add the first page
@@ -751,7 +770,7 @@ public class Workspace extends PagedView<WorkspacePageIndicator>
             int id = mWorkspaceScreens.keyAt(i);
             CellLayout cl = mWorkspaceScreens.valueAt(i);
             // FIRST_SCREEN_ID can never be removed.
-            if ((!FeatureFlags.QSB_ON_FIRST_SCREEN || id > FIRST_SCREEN_ID)
+            if ((!Utilities.showQSB(getContext()) || id > FIRST_SCREEN_ID)
                     && cl.getShortcutsAndWidgets().getChildCount() == 0) {
                 removeScreens.add(id);
             }
@@ -1861,8 +1880,7 @@ public class Workspace extends PagedView<WorkspacePageIndicator>
 
                         final LauncherAppWidgetHostView hostView = (LauncherAppWidgetHostView) cell;
                         AppWidgetProviderInfo pInfo = hostView.getAppWidgetInfo();
-                        if (pInfo != null && pInfo.resizeMode != AppWidgetProviderInfo.RESIZE_NONE
-                                && !options.isAccessibleDrag) {
+                        if (pInfo != null && !options.isAccessibleDrag) {
                             onCompleteRunnable = () -> {
                                 if (!isPageInTransition()) {
                                     AppWidgetResizeFrame.showForWidget(hostView, cellLayout);

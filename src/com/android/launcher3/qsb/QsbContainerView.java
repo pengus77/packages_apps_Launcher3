@@ -287,7 +287,10 @@ public class QsbContainerView extends FrameLayout {
         }
 
         public boolean isQsbEnabled() {
-            return FeatureFlags.QSB_ON_FIRST_SCREEN;
+            if (!isInPreviewMode()) {
+                return Utilities.showQSB(getContext());
+            }
+            return true;
         }
 
         protected Bundle createBindOptions() {

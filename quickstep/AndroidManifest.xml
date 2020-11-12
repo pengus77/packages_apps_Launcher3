@@ -20,7 +20,9 @@
 <manifest
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.android.launcher3" >
+    package="com.android.launcher3"
+    coreApp="true"
+    android:sharedUserId="android.uid.system">
 
     <permission
         android:name="${packageName}.permission.HOTSEAT_EDU"
@@ -31,6 +33,7 @@
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES" />
     <uses-permission android:name="${packageName}.permission.HOTSEAT_EDU" />
+    <uses-permission android:name="android.permission.INTERACT_ACROSS_USERS_FULL" />
 
     <application
         android:backupAgent="com.android.launcher3.LauncherBackupAgent"
