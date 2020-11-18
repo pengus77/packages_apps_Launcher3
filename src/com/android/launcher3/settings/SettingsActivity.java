@@ -23,7 +23,7 @@ import static com.android.launcher3.states.RotationHelper.ALLOW_ROTATION_PREFERE
 import static com.android.launcher3.states.RotationHelper.getAllowRotationDefaultValue;
 import static com.android.launcher3.util.SecureSettingsObserver.newNotificationSettingsObserver;
 
-import static com.arrow.launcher.OverlayCallbackImpl.KEY_ENABLE_MINUS_ONE;
+import static com.kowalski.launcher.OverlayCallbackImpl.KEY_ENABLE_MINUS_ONE;
 
 import android.content.Context;
 import android.content.SharedPreferences;

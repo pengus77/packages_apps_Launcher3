@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.arrow.launcher;
+package com.kowalski.launcher;
 
 import android.app.Activity;
 import android.content.SharedPreferences;

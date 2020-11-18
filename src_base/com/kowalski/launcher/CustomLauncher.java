@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.arrow.launcher;
+package com.kowalski.launcher;
 
 import com.android.launcher3.Launcher;
 import com.android.systemui.plugins.shared.LauncherOverlayManager;
