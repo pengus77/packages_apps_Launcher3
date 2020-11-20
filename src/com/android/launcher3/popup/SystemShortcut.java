@@ -7,6 +7,7 @@ import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Rect;
+import android.net.Uri;
 import android.view.View;
 import android.view.accessibility.AccessibilityNodeInfo;
 import android.widget.ImageView;
@@ -26,6 +27,7 @@ import com.android.launcher3.userevent.nano.LauncherLogProto.ControlType;
 import com.android.launcher3.util.InstantAppResolver;
 import com.android.launcher3.util.PackageManagerHelper;
 import com.android.launcher3.util.PackageUserKey;
+import com.android.launcher3.Utilities;
 import com.android.launcher3.widget.WidgetsBottomSheet;
 
 import java.util.List;
@@ -92,6 +94,40 @@ public abstract class SystemShortcut<T extends BaseDraggingActivity> extends Ite
     public interface Factory<T extends BaseDraggingActivity> {
 
         @Nullable SystemShortcut<T> getShortcut(T activity, ItemInfo itemInfo);
+    }
+
+    public static final Factory<Launcher> UNINSTALL = (launcher, itemInfo) -> {
+        if (itemInfo.getTargetComponent() == null) return null;
+        String packageName = itemInfo.getTargetComponent().getPackageName();
+        boolean isSystemApp = Utilities.isSystemApp(launcher.getApplicationContext(), packageName); 
+        if (isSystemApp) {
+            return null;
+        }
+        return new Uninstall(launcher, itemInfo, packageName);
+    };
+
+    public static class Uninstall extends SystemShortcut<Launcher> {
+        private static final String TAG = "UninstallSystemShortcut";
+        private final Launcher mTarget;
+        private final ItemInfo mItemInfo;
+        private final String mPackageName;
+
+        public Uninstall(Launcher target, ItemInfo itemInfo, String packageName) {
+            super(R.drawable.ic_uninstall_no_shadow, R.string.uninstall_drop_target_label, target, itemInfo);
+            mTarget = target;
+            mItemInfo = itemInfo;
+            mPackageName = packageName;
+        }
+
+        @Override
+        public void onClick(View view) {
+            dismissTaskMenuView(mTarget);
+
+            Intent intent = new Intent(Intent.ACTION_UNINSTALL_PACKAGE);
+            intent.setData(Uri.parse("package:" + mPackageName));
+            intent.putExtra(Intent.EXTRA_RETURN_RESULT, true);
+            mTarget.startActivity(intent);
+        }
     }
 
     public static final Factory<Launcher> WIDGETS = (launcher, itemInfo) -> {
