@@ -24,6 +24,7 @@ import static com.android.launcher3.states.RotationHelper.getAllowRotationDefaul
 import static com.android.launcher3.util.SecureSettingsObserver.newNotificationSettingsObserver;
 
 import static com.kowalski.launcher.OverlayCallbackImpl.KEY_ENABLE_MINUS_ONE;
+import static com.android.launcher3.Utilities.KEY_SHOW_SEARCHBAR;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -161,6 +162,7 @@ public class SettingsActivity extends FragmentActivity
         protected static final String GSA_PACKAGE = "com.google.android.googlequicksearchbox";
 
         private Preference mShowGoogleAppPref;
+        private Preference mShowSearchBar;
 
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
@@ -251,11 +253,15 @@ public class SettingsActivity extends FragmentActivity
                     });
                     return true;
 
+                case KEY_SHOW_SEARCHBAR:
+                    mShowSearchBar = preference;
+                    updateIsGoogleSearchEnabled();
+                    return true;
+
                 case KEY_ENABLE_MINUS_ONE:
                     mShowGoogleAppPref = preference;
                     updateIsGoogleAppEnabled();
                     return true;
-
             }
 
             return true;
@@ -270,8 +276,16 @@ public class SettingsActivity extends FragmentActivity
         }
 
         private void updateIsGoogleAppEnabled() {
-            if (mShowGoogleAppPref != null) {
-                mShowGoogleAppPref.setEnabled(isGSAEnabled(getContext()));
+            if (mShowGoogleAppPref != null && !isGSAEnabled(getContext())) {
+                PreferenceScreen screen = getPreferenceScreen();
+                screen.removePreference(mShowGoogleAppPref);
+            }
+        }
+
+        private void updateIsGoogleSearchEnabled() {
+            if (mShowSearchBar != null && !isGSAEnabled(getContext())) {
+                PreferenceScreen screen = getPreferenceScreen();
+                screen.removePreference(mShowSearchBar);
             }
         }
 
