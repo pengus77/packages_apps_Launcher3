@@ -25,6 +25,7 @@
         launcher:numFolderRows="2"
         launcher:numHotseatIcons="3"
         launcher:dbFile="launcher_3_by_3.db"
+        launcher:numAllAppsColumns="3"
         launcher:numRows="3">
 
         <display-option
@@ -52,6 +53,7 @@
         launcher:numFolderRows="3"
         launcher:numHotseatIcons="4"
         launcher:dbFile="launcher_4_by_4.db"
+        launcher:numAllAppsColumns="4"
         launcher:numRows="4">
 
         <display-option
@@ -80,6 +82,7 @@
         launcher:numFolderColumns="4"
         launcher:numHotseatIcons="4"
         launcher:dbFile="launcher_4_by_5.db"
+        launcher:numAllAppsColumns="4"
         launcher:defaultLayoutId="@xml/default_workspace_4x5" >
 
         <display-option
@@ -100,6 +103,7 @@
         launcher:numFolderRows="4" 
         launcher:numHotseatIcons="5" 
         launcher:dbFile="launcher_5_by_5.db"
+        launcher:numAllAppsColumns="5"
         launcher:numRows="5">
 
         <display-option
@@ -138,6 +142,7 @@
         launcher:numFolderColumns="4"
         launcher:numHotseatIcons="5"
         launcher:dbFile="launcher_5_by_6.db"
+        launcher:numAllAppsColumns="5"
         launcher:defaultLayoutId="@xml/default_workspace_5x6" >
 
         <display-option
@@ -157,6 +162,7 @@
         launcher:numFolderColumns="4"
         launcher:numHotseatIcons="5"
         launcher:dbFile="launcher_5_by_7.db"
+        launcher:numAllAppsColumns="5"
         launcher:defaultLayoutId="@xml/default_workspace_5x7" >
 
         <display-option
@@ -176,6 +182,7 @@
         launcher:numFolderColumns="5"
         launcher:numHotseatIcons="6"
         launcher:dbFile="launcher_6_by_6.db"
+        launcher:numAllAppsColumns="6"
         launcher:defaultLayoutId="@xml/default_workspace_6x6" >
 
         <display-option
