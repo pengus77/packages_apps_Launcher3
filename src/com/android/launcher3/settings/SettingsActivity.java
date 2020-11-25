@@ -25,6 +25,7 @@ import static com.android.launcher3.util.SecureSettingsObserver.newNotificationS
 
 import static com.kowalski.launcher.OverlayCallbackImpl.KEY_ENABLE_MINUS_ONE;
 import static com.android.launcher3.Utilities.KEY_SHOW_SEARCHBAR;
+import static com.android.launcher3.Utilities.KEY_ICONS_SIZE;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -46,8 +47,10 @@ import androidx.preference.PreferenceFragmentCompat.OnPreferenceStartFragmentCal
 import androidx.preference.PreferenceFragmentCompat.OnPreferenceStartScreenCallback;
 import androidx.preference.PreferenceGroup.PreferencePositionCallback;
 import androidx.preference.PreferenceScreen;
+import androidx.preference.SeekBarPreference;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.launcher3.InvariantDeviceProfile;
 import com.android.launcher3.LauncherAppState;
 import com.android.launcher3.LauncherFiles;
 import com.android.launcher3.R;
@@ -108,7 +111,9 @@ public class SettingsActivity extends FragmentActivity
                 LauncherAppState.getInstanceNoCreate().setNeedsRestart();
         } else if (Utilities.KEY_SHOW_SEARCHBAR.equals(key)) {
                 LauncherAppState.getInstanceNoCreate().setNeedsRestart();
-	}
+        } else if (Utilities.KEY_ICONS_SIZE.equals(key)) {
+                LauncherAppState.getInstanceNoCreate().setNeedsRestart();
+        }
     }
 
     @Override
@@ -266,6 +271,18 @@ public class SettingsActivity extends FragmentActivity
 
                 case KEY_ONLY_SHOW_RUNNING:
                     preference.setDefaultValue(Utilities.showOnlyRunningApps(getContext()));
+                    break;
+
+                case KEY_ICONS_SIZE:
+                    SeekBarPreference sb = (SeekBarPreference)preference;
+                    sb.setShowSeekBarValue(true);
+                    sb.setUpdatesContinuously(true);
+                    sb.setSeekBarIncrement(1);
+                    sb.setMin(32);
+                    sb.setMax(96);
+
+                    InvariantDeviceProfile idp = LauncherAppState.getInstanceNoCreate().getInvariantDeviceProfile();
+                    sb.setValue(Utilities.getIconsSize(getContext(), idp.iconSize));
                     break;
             }
 

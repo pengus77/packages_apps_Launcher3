@@ -63,4 +63,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <!-- Only show running apps in recents -->
     <string name="only_show_running_in_recents_title">Only show running apps in recents</string>
     <string name="only_show_running_in_recents_desc">Exclude all non running applications from the recents view</string>
+
+    <!-- Icons Size -->
+    <string name="icons_size_title">Icons size</string>
 </resources>
