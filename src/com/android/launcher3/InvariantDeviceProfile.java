@@ -259,8 +259,8 @@ public class InvariantDeviceProfile implements OnSharedPreferenceChangeListener 
     private void initGrid(
             Context context, DefaultDisplay.Info displayInfo, DisplayOption displayOption) {
         GridOption closestProfile = displayOption.grid;
-        numRows = closestProfile.numRows;
-        numColumns = closestProfile.numColumns;
+        numRows = Utilities.getNumRows(context, closestProfile.numRows);
+        numColumns = Utilities.getNumCols(context, closestProfile.numColumns);
         numHotseatIcons = closestProfile.numHotseatIcons;
         dbFile = closestProfile.dbFile;
         defaultLayoutId = closestProfile.defaultLayoutId;

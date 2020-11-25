@@ -70,6 +70,11 @@
         android:defaultValue="@bool/only_show_running_in_recents"
         android:persistent="true" />
 
+    <Preference
+        android:key="pref_trust_apps"
+        android:title="@string/trust_apps_manager_name"
+        android:summary="@string/trust_apps_manager_summary" />
+
     <SeekBarPreference
         android:key="pref_icons_size"
         android:title="@string/icons_size_title"
@@ -77,10 +82,19 @@
         android:max="96"
         android:persistent="true"/>
 
-    <Preference
-        android:key="pref_trust_apps"
-        android:title="@string/trust_apps_manager_name"
-        android:summary="@string/trust_apps_manager_summary" />
+    <SeekBarPreference
+        android:key="pref_num_cols"
+        android:title="@string/num_cols_title"
+        android:min="3"
+        android:max="9"
+        android:persistent="true"/>
+
+    <SeekBarPreference
+        android:key="pref_num_rows"
+        android:title="@string/num_rows_title"
+        android:min="3"
+        android:max="9"
+        android:persistent="true"/>
 
 <PreferenceCategory
         android:key="gestures_category"

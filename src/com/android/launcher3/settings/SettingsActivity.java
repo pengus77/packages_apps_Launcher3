@@ -26,6 +26,8 @@ import static com.android.launcher3.util.SecureSettingsObserver.newNotificationS
 import static com.kowalski.launcher.OverlayCallbackImpl.KEY_ENABLE_MINUS_ONE;
 import static com.android.launcher3.Utilities.KEY_SHOW_SEARCHBAR;
 import static com.android.launcher3.Utilities.KEY_ICONS_SIZE;
+import static com.android.launcher3.Utilities.KEY_NUM_ROWS;
+import static com.android.launcher3.Utilities.KEY_NUM_COLS;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -112,6 +114,10 @@ public class SettingsActivity extends FragmentActivity
         } else if (Utilities.KEY_SHOW_SEARCHBAR.equals(key)) {
                 LauncherAppState.getInstanceNoCreate().setNeedsRestart();
         } else if (Utilities.KEY_ICONS_SIZE.equals(key)) {
+                LauncherAppState.getInstanceNoCreate().setNeedsRestart();
+        } else if (Utilities.KEY_NUM_ROWS.equals(key)) {
+                LauncherAppState.getInstanceNoCreate().setNeedsRestart();
+        } else if (Utilities.KEY_NUM_COLS.equals(key)) {
                 LauncherAppState.getInstanceNoCreate().setNeedsRestart();
         }
     }
@@ -225,7 +231,7 @@ public class SettingsActivity extends FragmentActivity
                             Settings.Secure.getUriFor(NOTIFICATION_ENABLED_LISTENERS), false,
                             mNotificationDotsObserver);
                     mNotificationDotsObserver.dispatchOnChange();
-                    return true;
+                    break;
 
                 case ADD_ICON_PREFERENCE_KEY:
                     return Utilities.ATLEAST_OREO;
@@ -237,7 +243,7 @@ public class SettingsActivity extends FragmentActivity
                     }
                     // Initialize the UI once
                     preference.setDefaultValue(getAllowRotationDefaultValue());
-                    return true;
+                    break;
 
                 case FLAGS_PREFERENCE_KEY:
                     // Only show flag toggler UI if this build variant implements that.
@@ -257,36 +263,53 @@ public class SettingsActivity extends FragmentActivity
                         });
                         return true;
                     });
-                    return true;
+                    break;
 
                 case KEY_SHOW_SEARCHBAR:
                     mShowSearchBar = preference;
                     updateIsGoogleSearchEnabled();
-                    return true;
+                    break;
 
                 case KEY_ENABLE_MINUS_ONE:
                     mShowGoogleAppPref = preference;
                     updateIsGoogleAppEnabled();
-                    return true;
+                    break;
 
                 case KEY_ONLY_SHOW_RUNNING:
                     preference.setDefaultValue(Utilities.showOnlyRunningApps(getContext()));
                     break;
 
                 case KEY_ICONS_SIZE:
-                    SeekBarPreference sb = (SeekBarPreference)preference;
-                    sb.setShowSeekBarValue(true);
-                    sb.setUpdatesContinuously(true);
-                    sb.setSeekBarIncrement(1);
-                    sb.setMin(32);
-                    sb.setMax(96);
+                    SeekBarPreference icons = setupSeekBar(preference, 32, 96);
+                    icons.setValue(Utilities.getIconsSize(getContext(), 
+                                   LauncherAppState.getInstanceNoCreate().getInvariantDeviceProfile().iconSize));
+                    break;
 
-                    InvariantDeviceProfile idp = LauncherAppState.getInstanceNoCreate().getInvariantDeviceProfile();
-                    sb.setValue(Utilities.getIconsSize(getContext(), idp.iconSize));
+                case KEY_NUM_ROWS:
+                    SeekBarPreference rows = setupSeekBar(preference, 3, 9);
+                    rows.setValue(Utilities.getNumRows(getContext(),
+                                  LauncherAppState.getInstanceNoCreate().getInvariantDeviceProfile().numRows));
+                    break;
+
+               case KEY_NUM_COLS:
+                    SeekBarPreference cols = setupSeekBar(preference, 3, 9);
+                    cols.setValue(Utilities.getNumCols(getContext(),
+                                  LauncherAppState.getInstanceNoCreate().getInvariantDeviceProfile().numColumns));
                     break;
             }
 
             return true;
+        }
+
+        private static SeekBarPreference setupSeekBar(Preference preference, int min, int max) {
+            SeekBarPreference sb = (SeekBarPreference)preference;
+            sb.setShowSeekBarValue(true);
+            sb.setUpdatesContinuously(true);
+            sb.setSeekBarIncrement(1);
+            sb.setAdjustable(true);
+            sb.setMin(min);
+            sb.setMax(max);
+            return sb;
         }
 
         public static boolean isGSAEnabled(Context context) {

@@ -144,6 +144,8 @@ public final class Utilities {
     public static final String KEY_SHOW_SEARCHBAR = "pref_show_searchbar";
     public static final String SHOW_ONLY_RUNNING_APPS = "pref_only_show_running_in_recents";
     public static final String KEY_ICONS_SIZE = "pref_icons_size";
+    public static final String KEY_NUM_ROWS = "pref_num_rows";
+    public static final String KEY_NUM_COLS = "pref_num_cols";
 
     /**
      * Indicates if the device has a debug build. Should only be used to store additional info or
@@ -801,6 +803,18 @@ public final class Utilities {
         SharedPreferences prefs = getPrefs(context.getApplicationContext());
         int iconsSize = prefs.getInt(KEY_ICONS_SIZE, Math.round(fallbackSize));
         return iconsSize;
+    }
+
+    public static int getNumRows(Context context, int fallbackSize) {
+        SharedPreferences prefs = getPrefs(context.getApplicationContext());
+        int rows = prefs.getInt(KEY_NUM_ROWS, fallbackSize);
+        return rows;
+    }
+
+    public static int getNumCols(Context context, int fallbackSize) {
+        SharedPreferences prefs = getPrefs(context.getApplicationContext());
+        int cols = prefs.getInt(KEY_NUM_COLS, fallbackSize);
+        return cols;
     }
 
     public static void restart(final Context context) {
