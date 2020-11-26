@@ -147,6 +147,7 @@ public final class Utilities {
     public static final String KEY_NUM_ROWS = "pref_num_rows";
     public static final String KEY_NUM_COLS = "pref_num_cols";
     public static final String KEY_HOTSEAT_ICONS = "pref_hotseat_icons";
+    public static final String KEY_ALL_APPS_COLS = "pref_all_apps_cols";
 
     /**
      * Indicates if the device has a debug build. Should only be used to store additional info or
@@ -822,6 +823,12 @@ public final class Utilities {
         SharedPreferences prefs = getPrefs(context.getApplicationContext());
         int icons = prefs.getInt(KEY_HOTSEAT_ICONS, fallbackSize);
         return icons;
+    }
+
+    public static int getAllAppsCols(Context context, int fallbackSize) {
+        SharedPreferences prefs = getPrefs(context.getApplicationContext());
+        int cols = prefs.getInt(KEY_ALL_APPS_COLS, fallbackSize);
+        return cols;
     }
 
     public static void restart(final Context context) {

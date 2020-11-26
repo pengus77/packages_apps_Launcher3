@@ -29,6 +29,7 @@ import static com.android.launcher3.Utilities.KEY_ICONS_SIZE;
 import static com.android.launcher3.Utilities.KEY_NUM_ROWS;
 import static com.android.launcher3.Utilities.KEY_NUM_COLS;
 import static com.android.launcher3.Utilities.KEY_HOTSEAT_ICONS;
+import static com.android.launcher3.Utilities.KEY_ALL_APPS_COLS;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -117,6 +118,7 @@ public class SettingsActivity extends FragmentActivity
             case Utilities.KEY_NUM_ROWS:
             case Utilities.KEY_NUM_COLS:
             case Utilities.KEY_HOTSEAT_ICONS:
+            case Utilities.KEY_ALL_APPS_COLS:
                 LauncherAppState.getInstanceNoCreate().setNeedsRestart();
                 break;
             default:
@@ -303,6 +305,12 @@ public class SettingsActivity extends FragmentActivity
                     SeekBarPreference hsicons = setupSeekBar(preference, 3, 7);
                     hsicons.setValue(Utilities.getHotseatIcons(getContext(),
                                   LauncherAppState.getInstanceNoCreate().getInvariantDeviceProfile().numHotseatIcons));
+                    break;
+
+               case KEY_ALL_APPS_COLS:
+                    SeekBarPreference allAppsCols = setupSeekBar(preference, 3, 9);
+                    allAppsCols.setValue(Utilities.getAllAppsCols(getContext(),
+                                  LauncherAppState.getInstanceNoCreate().getInvariantDeviceProfile().numAllAppsColumns));
                     break;
             }
 
