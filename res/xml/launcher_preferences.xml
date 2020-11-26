@@ -96,6 +96,13 @@
         android:max="9"
         android:persistent="true"/>
 
+    <SeekBarPreference
+        android:key="pref_hotseat_icons"
+        android:title="@string/hotseat_icons_title"
+        android:min="3"
+        android:max="7"
+        android:persistent="true"/>
+
 <PreferenceCategory
         android:key="gestures_category"
         android:title="@string/gestures_category">

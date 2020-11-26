@@ -69,4 +69,5 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <string name="icons_size_title">Icons size</string>
     <string name="num_cols_title">Number of columns</string>
     <string name="num_rows_title">Number of rows</string>
+    <string name="hotseat_icons_title">Number of hotseat icons</string>
 </resources>

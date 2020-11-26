@@ -261,7 +261,7 @@ public class InvariantDeviceProfile implements OnSharedPreferenceChangeListener 
         GridOption closestProfile = displayOption.grid;
         numRows = Utilities.getNumRows(context, closestProfile.numRows);
         numColumns = Utilities.getNumCols(context, closestProfile.numColumns);
-        numHotseatIcons = closestProfile.numHotseatIcons;
+        numHotseatIcons = Utilities.getHotseatIcons(context, closestProfile.numHotseatIcons);
         dbFile = closestProfile.dbFile;
         defaultLayoutId = closestProfile.defaultLayoutId;
         demoModeLayoutId = closestProfile.demoModeLayoutId;

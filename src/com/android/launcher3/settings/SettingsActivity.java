@@ -28,6 +28,7 @@ import static com.android.launcher3.Utilities.KEY_SHOW_SEARCHBAR;
 import static com.android.launcher3.Utilities.KEY_ICONS_SIZE;
 import static com.android.launcher3.Utilities.KEY_NUM_ROWS;
 import static com.android.launcher3.Utilities.KEY_NUM_COLS;
+import static com.android.launcher3.Utilities.KEY_HOTSEAT_ICONS;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -109,16 +110,17 @@ public class SettingsActivity extends FragmentActivity
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        if (Utilities.KEY_DT_GESTURE.equals(key)) {
+        switch (key) {
+            case Utilities.KEY_DT_GESTURE:
+            case Utilities.KEY_SHOW_SEARCHBAR:
+            case Utilities.KEY_ICONS_SIZE:
+            case Utilities.KEY_NUM_ROWS:
+            case Utilities.KEY_NUM_COLS:
+            case Utilities.KEY_HOTSEAT_ICONS:
                 LauncherAppState.getInstanceNoCreate().setNeedsRestart();
-        } else if (Utilities.KEY_SHOW_SEARCHBAR.equals(key)) {
-                LauncherAppState.getInstanceNoCreate().setNeedsRestart();
-        } else if (Utilities.KEY_ICONS_SIZE.equals(key)) {
-                LauncherAppState.getInstanceNoCreate().setNeedsRestart();
-        } else if (Utilities.KEY_NUM_ROWS.equals(key)) {
-                LauncherAppState.getInstanceNoCreate().setNeedsRestart();
-        } else if (Utilities.KEY_NUM_COLS.equals(key)) {
-                LauncherAppState.getInstanceNoCreate().setNeedsRestart();
+                break;
+            default:
+                break;
         }
     }
 
@@ -295,6 +297,12 @@ public class SettingsActivity extends FragmentActivity
                     SeekBarPreference cols = setupSeekBar(preference, 3, 9);
                     cols.setValue(Utilities.getNumCols(getContext(),
                                   LauncherAppState.getInstanceNoCreate().getInvariantDeviceProfile().numColumns));
+                    break;
+
+               case KEY_HOTSEAT_ICONS:
+                    SeekBarPreference hsicons = setupSeekBar(preference, 3, 7);
+                    hsicons.setValue(Utilities.getHotseatIcons(getContext(),
+                                  LauncherAppState.getInstanceNoCreate().getInvariantDeviceProfile().numHotseatIcons));
                     break;
             }
 
