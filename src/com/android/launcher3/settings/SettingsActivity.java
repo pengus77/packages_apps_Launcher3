@@ -30,6 +30,7 @@ import static com.android.launcher3.Utilities.KEY_NUM_ROWS;
 import static com.android.launcher3.Utilities.KEY_NUM_COLS;
 import static com.android.launcher3.Utilities.KEY_HOTSEAT_ICONS;
 import static com.android.launcher3.Utilities.KEY_ALL_APPS_COLS;
+import static com.android.launcher3.Utilities.KEY_SHRINK_NON_ADAPTIVE_ICONS;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -114,12 +115,17 @@ public class SettingsActivity extends FragmentActivity
         switch (key) {
             case Utilities.KEY_DT_GESTURE:
             case Utilities.KEY_SHOW_SEARCHBAR:
+            case Utilities.KEY_ALL_APPS_COLS:
+                LauncherAppState.getInstanceNoCreate().setNeedsRestart();
+                break;
             case Utilities.KEY_ICONS_SIZE:
             case Utilities.KEY_NUM_ROWS:
             case Utilities.KEY_NUM_COLS:
             case Utilities.KEY_HOTSEAT_ICONS:
-            case Utilities.KEY_ALL_APPS_COLS:
-                LauncherAppState.getInstanceNoCreate().setNeedsRestart();
+                LauncherAppState.getInstanceNoCreate().getInvariantDeviceProfile().reload();
+                break;
+            case Utilities.KEY_SHRINK_NON_ADAPTIVE_ICONS:
+                LauncherAppState.getInstanceNoCreate().getInvariantDeviceProfile().reloadIcons();
                 break;
             default:
                 break;
@@ -281,6 +287,10 @@ public class SettingsActivity extends FragmentActivity
 
                 case KEY_ONLY_SHOW_RUNNING:
                     preference.setDefaultValue(Utilities.showOnlyRunningApps(getContext()));
+                    break;
+
+                case KEY_SHRINK_NON_ADAPTIVE_ICONS:
+                    preference.setDefaultValue(Utilities.shouldShrinkNonAdaptiveIcons(getContext()));
                     break;
 
                 case KEY_ICONS_SIZE:
