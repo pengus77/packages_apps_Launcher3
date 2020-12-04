@@ -122,6 +122,14 @@
         android:max="9"
         android:persistent="true"/>
 
+    <SeekBarPreference
+        android:key="pref_all_apps_icons_padding"
+        android:title="@string/all_apps_icons_padding_title"
+        android:min="128"
+        android:max="512"
+        android:persistent="true"/>
+
+
 <PreferenceCategory
         android:key="gestures_category"
         android:title="@string/gestures_category">

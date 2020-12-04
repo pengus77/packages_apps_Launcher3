@@ -36,6 +36,7 @@ public class DeviceProfile {
     private static final float TABLET_MIN_DPS = 600;
     private static final float LARGE_TABLET_MIN_DPS = 720;
 
+    private Context mContext;
 
     public final InvariantDeviceProfile inv;
     private final DefaultDisplay.Info mInfo;
@@ -144,6 +145,8 @@ public class DeviceProfile {
             Point minSize, Point maxSize, int width, int height, boolean isLandscape,
             boolean isMultiWindowMode, boolean transposeLayoutWithOrientation,
             Point windowPosition) {
+
+        mContext = context;
 
         this.inv = inv;
         this.isLandscape = isLandscape;
@@ -380,6 +383,8 @@ public class DeviceProfile {
             allAppsCellHeightPx = getCellSize().y;
         }
         allAppsCellWidthPx = allAppsIconSizePx + allAppsIconDrawablePaddingPx;
+
+        allAppsCellHeightPx = Utilities.getAllAppsIconsPadding(mContext, allAppsCellHeightPx);
 
         if (isVerticalBarLayout()) {
             // Always hide the Workspace text with vertical bar layout.

@@ -144,6 +144,7 @@ public final class Utilities {
     public static final String KEY_SHOW_SEARCHBAR = "pref_show_searchbar";
     public static final String SHOW_ONLY_RUNNING_APPS = "pref_only_show_running_in_recents";
     public static final String KEY_ICONS_SIZE = "pref_icons_size";
+    public static final String KEY_ALL_APPS_ICONS_PADDING = "pref_all_apps_icons_padding";
     public static final String KEY_NUM_ROWS = "pref_num_rows";
     public static final String KEY_NUM_COLS = "pref_num_cols";
     public static final String KEY_HOTSEAT_ICONS = "pref_hotseat_icons";
@@ -806,6 +807,12 @@ public final class Utilities {
         SharedPreferences prefs = getPrefs(context.getApplicationContext());
         int iconsSize = prefs.getInt(KEY_ICONS_SIZE, Math.round(fallbackSize));
         return iconsSize;
+    }
+
+    public static int getAllAppsIconsPadding(Context context, int fallbackSize) {
+        SharedPreferences prefs = getPrefs(context.getApplicationContext());
+        int iconsPadding = prefs.getInt(KEY_ALL_APPS_ICONS_PADDING, fallbackSize);
+        return iconsPadding;
     }
 
     public static int getNumRows(Context context, int fallbackSize) {
