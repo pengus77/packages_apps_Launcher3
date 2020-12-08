@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  Copyright (C) 2020 Kowalski Open Source Project
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <!-- Show searchbar -->
+    <string name="show_searchbar_title">Suchleiste anzeigen</string>
+    <string name="show_searchbar_summary">Suchleiste auf dem Startbildschirm anzeigen</string>
+
+    <string name="state_loading">Anwenden\u2026</string>
+
+    <!-- Gestures -->
+    <string name="gestures_category">Gesten</string>
+    <string name="pref_notifications_gesture_title">Geste für Benachrichtigungen</string>
+    <string name="pref_notifications_gesture_summary">Auf dem Startbildschirm senkrecht nach unten wischen um die Schnelleinstellungen anzuzeigen</string>
+    <string name="pref_dt_gesture_title">Geste für Doppeltippen</string>
+    <string name="pref_dt_gesture_summary">Auf freien Bereich doppeltippen, um das Display auszuschalten</string>
+
+    <!-- Development -->
+    <string name="development_category">Entwickleroptionen</string>
+
+    <!-- Trust apps -->
+    <string name="trust_apps_manager_name">Versteckte &amp; geschützte Apps</string>
+    <string name="trust_apps_manager_summary">Apps verstecken oder mittels Displaysperre schützen &amp; einschränken usw.</string>
+    <string name="trust_apps_manager_name_dialog">Geschützte App</string>
+    <string name="trust_apps_auth_manager">Entsperren, um versteckte und geschützte Apps zu verwalten</string>
+    <string name="trust_apps_auth_open_app">Zum Öffnen von %1$s authorisieren</string>
+    <string name="trust_apps_loading">Lädt\u2026</string>
+    <string name="trust_apps_no_lock_error">Bitte eine Displaysperre einrichten, um den App-Zugriff einzuschränken</string>
+    <string name="trust_apps_help">Hilfe</string>
+    <string name="trust_apps_info_hidden">Versteckte Apps und ihre Widgets werden in der App-Übersicht ausgeblendet</string>
+    <string name="trust_apps_info_protected">Geschützte Apps erfordern Authorisierung um vom Launcher geöffnet zu werden</string>
+
+    <!-- Settings title to show Google Now at -1 screen on launcher. [CHAR LIMIT=50] -->
+    <string name="title_show_google_app">Google App anzeigen</string>
+    <!-- Settings message explaining when the -1 screen is available on an LTR device. [CHAR LIMIT=100] -->
+    <string name="msg_minus_one_on_left">Durch Wischen nach links auf dem Startbildschirm</string>
+    <!-- Settings message explaining when the -1 screen is available on an RTL device. [CHAR LIMIT=100] -->
+    <string name="msg_minus_one_on_right">Durch Wischen nach rechts auf dem Startbildschirm</string>
+    <string name="pref_show_google_now_summary" translatable="false">@string/msg_minus_one_on_left</string>
+
+    <!-- Folder titles -->
+    <string name="google_folder_title" translatable="false">Google</string>
+
+    <!-- Hide labels -->
+    <string name="desktop_show_labels">Icon-Beschriftung auf dem Startbildschirm anzeigen</string>
+    <string name="drawer_show_labels">Icon-Beschriftung in der App-Übersicht anzeigen</string>
+
+    <!-- Only show running apps in recents -->
+    <string name="only_show_running_in_recents_title">Nur aktive Apps in zuletzt verwendeten anzeigen</string>
+    <string name="only_show_running_in_recents_desc">Alle inaktiven Apps aus der Übersicht der zuletzt verwendeten ausblenden</string>
+
+    <!-- Grid and Icons -->
+    <string name="grid_and_icons_category">Raster und Icons</string>
+    <string name="icons_size_title">Icon-Größe</string>
+    <string name="num_cols_title">Anzahl Spalten</string>
+    <string name="num_rows_title">Anzahl Reihen</string>
+    <string name="hotseat_icons_title">Anzahl der Dock-Icons</string>
+    <string name="all_apps_cols_title">Anzahl Spalten in App-Übersicht</string>
+    <string name="shrink_non_adaptive_icons_title">Icon-Maskierung überschreiben</string>
+</resources>

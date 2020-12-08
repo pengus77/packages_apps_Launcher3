@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  Copyright (C) 2020 Kowalski Open Source Project
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <!-- Show searchbar -->
+    <string name="show_searchbar_title">Mostra Barra di Ricerca</string>
+    <string name="show_searchbar_summary">Mostra Barra di Ricerca sulla Schermata Principale</string>
+
+    <string name="state_loading">Applicando\u2026</string>
+
+    <!-- Gestures -->
+    <string name="gestures_category">Gesti</string>
+    <string name="pref_notifications_gesture_title">Gesti Impostazioni Rapide</string>
+    <string name="pref_notifications_gesture_summary">Scorri verso il basso sulla Schermata Principale per mostrare la tendina delle Impostazioni Rapide</string>
+    <string name="pref_dt_gesture_title">Doppio Tocco</string>
+    <string name="pref_dt_gesture_summary">Doppio Tocco su spazio vuoto per spegnere lo Schermo</string>
+
+    <!-- Development -->
+    <string name="development_category">Sviluppo</string>
+
+    <!-- Trust apps -->
+    <string name="trust_apps_manager_name">App Protette &amp; Nascoste</string>
+    <string name="trust_apps_manager_summary">Nascondi o proteggi App &amp; limitale via Blocco Schermo etc</string>
+    <string name="trust_apps_manager_name_dialog">App Protette</string>
+    <string name="trust_apps_auth_manager">Sblocca per gestire App Protette e Nascoste</string>
+    <string name="trust_apps_auth_open_app">Autenticati per aprire %1$s</string>
+    <string name="trust_apps_loading">Caricamento\u2026</string>
+    <string name="trust_apps_no_lock_error">Per favore imposta un Blocco Schermo sicuro per limitare l\'accesso alle app</string>
+    <string name="trust_apps_help">Aiuto</string>
+    <string name="trust_apps_info_hidden">App nascoste ed i relativi widgets sono nascoste dal menù</string>
+    <string name="trust_apps_info_protected">Le App protette richiede un autenticazione per poter essere aperte dal Launcher</string>
+
+    <!-- Settings title to show Google Now at -1 screen on launcher. [CHAR LIMIT=50] -->
+    <string name="title_show_google_app">Mostra l\'App di Google</string>
+    <!-- Settings message explaining when the -1 screen is available on an LTR device. [CHAR LIMIT=100] -->
+    <string name="msg_minus_one_on_left">Quando scorri verso sinistra dalla Schermata Iniziale principale</string>
+    <!-- Settings message explaining when the -1 screen is available on an RTL device. [CHAR LIMIT=100] -->
+    <string name="msg_minus_one_on_right">Quando scorri verso destra dalla Schermata Iniziale principale</string>
+    <string name="pref_show_google_now_summary" translatable="false">@string/msg_minus_one_on_left</string>
+
+    <!-- Folder titles -->
+    <string name="google_folder_title" translatable="false">Google</string>
+
+    <!-- Hide labels -->
+    <string name="desktop_show_labels">Mostra Etichette Icone sulla Schermata Principale</string>
+    <string name="drawer_show_labels">Mostra Etichette Icone nel menù</string>
+
+    <!-- Only show running apps in recents -->
+    <string name="only_show_running_in_recents_title">Mostra solo App aperte nei Recenti</string>
+    <string name="only_show_running_in_recents_desc">Escludi tutte le app non aperte dalla vista nei Recenti</string>
+
+    <!-- Grid and Icons -->
+    <string name="grid_and_icons_category">Griglia e Icone</string>
+    <string name="icons_size_title">Dimensione Icone</string>
+    <string name="num_cols_title">Numero di Colonne</string>
+    <string name="num_rows_title">Numero di Righe</string>
+    <string name="hotseat_icons_title">Numero Icone nella Dock</string>
+    <string name="all_apps_cols_title">Numero di Colonne nel Menù</string>
+    <string name="shrink_non_adaptive_icons_title">Ignora forma originale delle Icone</string>
+</resources>

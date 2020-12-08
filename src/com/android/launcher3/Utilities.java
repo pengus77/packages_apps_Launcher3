@@ -144,10 +144,12 @@ public final class Utilities {
     public static final String KEY_SHOW_SEARCHBAR = "pref_show_searchbar";
     public static final String SHOW_ONLY_RUNNING_APPS = "pref_only_show_running_in_recents";
     public static final String KEY_ICONS_SIZE = "pref_icons_size";
+    public static final String KEY_ALL_APPS_ICONS_PADDING = "pref_all_apps_icons_padding";
     public static final String KEY_NUM_ROWS = "pref_num_rows";
     public static final String KEY_NUM_COLS = "pref_num_cols";
     public static final String KEY_HOTSEAT_ICONS = "pref_hotseat_icons";
     public static final String KEY_ALL_APPS_COLS = "pref_all_apps_cols";
+    public static final String KEY_SHRINK_NON_ADAPTIVE_ICONS = "pref_shrink_non_adaptive_icons";
 
     /**
      * Indicates if the device has a debug build. Should only be used to store additional info or
@@ -807,6 +809,12 @@ public final class Utilities {
         return iconsSize;
     }
 
+    public static int getAllAppsIconsPadding(Context context, int fallbackSize) {
+        SharedPreferences prefs = getPrefs(context.getApplicationContext());
+        int iconsPadding = prefs.getInt(KEY_ALL_APPS_ICONS_PADDING, fallbackSize);
+        return iconsPadding;
+    }
+
     public static int getNumRows(Context context, int fallbackSize) {
         SharedPreferences prefs = getPrefs(context.getApplicationContext());
         int rows = prefs.getInt(KEY_NUM_ROWS, fallbackSize);
@@ -829,6 +837,12 @@ public final class Utilities {
         SharedPreferences prefs = getPrefs(context.getApplicationContext());
         int cols = prefs.getInt(KEY_ALL_APPS_COLS, fallbackSize);
         return cols;
+    }
+
+    public static boolean shouldShrinkNonAdaptiveIcons(Context context) {
+        SharedPreferences prefs = getPrefs(context.getApplicationContext());
+        boolean shrink = prefs.getBoolean(KEY_SHRINK_NON_ADAPTIVE_ICONS, true);
+        return shrink;
     }
 
     public static void restart(final Context context) {

@@ -108,6 +108,7 @@ public class InvariantDeviceProfile implements OnSharedPreferenceChangeListener 
     public int numFolderColumns;
     public float iconSize;
     public String iconShapePath;
+    public String iconPack;
     public float landscapeIconSize;
     public int iconBitmapSize;
     public int fillResIconDpi;
@@ -153,6 +154,7 @@ public class InvariantDeviceProfile implements OnSharedPreferenceChangeListener 
         numFolderColumns = p.numFolderColumns;
         iconSize = p.iconSize;
         iconShapePath = p.iconShapePath;
+        iconPack = p.iconPack;
         landscapeIconSize = p.landscapeIconSize;
         iconBitmapSize = p.iconBitmapSize;
         iconTextSize = p.iconTextSize;
@@ -271,6 +273,7 @@ public class InvariantDeviceProfile implements OnSharedPreferenceChangeListener 
 
         mExtraAttrs = closestProfile.extraAttrs;
 
+        iconPack = IconPackProvider.getCurrentIconPack(context);
         iconSize = (float)Utilities.getIconsSize(context, displayOption.iconSize);
         iconShapePath = getIconShapePath(context);
         landscapeIconSize = displayOption.landscapeIconSize;
@@ -354,6 +357,16 @@ public class InvariantDeviceProfile implements OnSharedPreferenceChangeListener 
         MAIN_EXECUTOR.execute(() -> onConfigChanged(appContext));
     }
 
+    public void reloadIcons() {
+         int changeFlags = CHANGE_FLAG_ICON_PARAMS;
+         IconShape.init(mContext);
+         apply(mContext, changeFlags);
+    }
+
+    public void reload() {
+         onConfigChanged(mContext);
+    }
+
     private void onConfigChanged(Context context) {
         // Config changes, what shall we do?
         InvariantDeviceProfile oldProfile = new InvariantDeviceProfile(this);
@@ -367,12 +380,13 @@ public class InvariantDeviceProfile implements OnSharedPreferenceChangeListener 
                 numColumns != oldProfile.numColumns ||
                 numFolderColumns != oldProfile.numFolderColumns ||
                 numFolderRows != oldProfile.numFolderRows ||
-                numHotseatIcons != oldProfile.numHotseatIcons) {
+                numHotseatIcons != oldProfile.numHotseatIcons ||
+                numAllAppsColumns != oldProfile.numAllAppsColumns) {
             changeFlags |= CHANGE_FLAG_GRID;
         }
 
         if (iconSize != oldProfile.iconSize || iconBitmapSize != oldProfile.iconBitmapSize ||
-                !iconShapePath.equals(oldProfile.iconShapePath)) {
+                !iconShapePath.equals(oldProfile.iconShapePath) || !iconPack.equals(oldProfile.iconPack)) {
             changeFlags |= CHANGE_FLAG_ICON_PARAMS;
         }
         if (!iconShapePath.equals(oldProfile.iconShapePath)) {

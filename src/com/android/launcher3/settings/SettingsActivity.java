@@ -26,10 +26,12 @@ import static com.android.launcher3.util.SecureSettingsObserver.newNotificationS
 import static com.kowalski.launcher.OverlayCallbackImpl.KEY_ENABLE_MINUS_ONE;
 import static com.android.launcher3.Utilities.KEY_SHOW_SEARCHBAR;
 import static com.android.launcher3.Utilities.KEY_ICONS_SIZE;
+import static com.android.launcher3.Utilities.KEY_ALL_APPS_ICONS_PADDING;
 import static com.android.launcher3.Utilities.KEY_NUM_ROWS;
 import static com.android.launcher3.Utilities.KEY_NUM_COLS;
 import static com.android.launcher3.Utilities.KEY_HOTSEAT_ICONS;
 import static com.android.launcher3.Utilities.KEY_ALL_APPS_COLS;
+import static com.android.launcher3.Utilities.KEY_SHRINK_NON_ADAPTIVE_ICONS;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -114,12 +116,18 @@ public class SettingsActivity extends FragmentActivity
         switch (key) {
             case Utilities.KEY_DT_GESTURE:
             case Utilities.KEY_SHOW_SEARCHBAR:
+            case Utilities.KEY_ALL_APPS_COLS:
+            case Utilities.KEY_ALL_APPS_ICONS_PADDING:
+                LauncherAppState.getInstanceNoCreate().setNeedsRestart();
+                break;
             case Utilities.KEY_ICONS_SIZE:
             case Utilities.KEY_NUM_ROWS:
             case Utilities.KEY_NUM_COLS:
             case Utilities.KEY_HOTSEAT_ICONS:
-            case Utilities.KEY_ALL_APPS_COLS:
-                LauncherAppState.getInstanceNoCreate().setNeedsRestart();
+                LauncherAppState.getInstanceNoCreate().getInvariantDeviceProfile().reload();
+                break;
+            case Utilities.KEY_SHRINK_NON_ADAPTIVE_ICONS:
+                LauncherAppState.getInstanceNoCreate().getInvariantDeviceProfile().reloadIcons();
                 break;
             default:
                 break;
@@ -219,6 +227,9 @@ public class SettingsActivity extends FragmentActivity
          * will remove that preference from the list.
          */
         protected boolean initPreference(Preference preference) {
+
+            Context context = getContext();
+
             switch (preference.getKey()) {
                 case NOTIFICATION_DOTS_PREFERENCE_KEY:
                     if (!Utilities.ATLEAST_OREO ||
@@ -251,12 +262,12 @@ public class SettingsActivity extends FragmentActivity
 
                 case FLAGS_PREFERENCE_KEY:
                     // Only show flag toggler UI if this build variant implements that.
-                    return FeatureFlags.showFlagTogglerUi(getContext());
+                    return FeatureFlags.showFlagTogglerUi(context);
 
                 case DEVELOPER_OPTIONS_KEY:
                     // Show if plugins are enabled or flag UI is enabled.
-                    return FeatureFlags.showFlagTogglerUi(getContext()) ||
-                            PluginManagerWrapper.hasPlugins(getContext());
+                    return FeatureFlags.showFlagTogglerUi(context) ||
+                            PluginManagerWrapper.hasPlugins(context);
 
                 case KEY_TRUST_APPS:
                     preference.setOnPreferenceClickListener(p -> {
@@ -280,36 +291,46 @@ public class SettingsActivity extends FragmentActivity
                     break;
 
                 case KEY_ONLY_SHOW_RUNNING:
-                    preference.setDefaultValue(Utilities.showOnlyRunningApps(getContext()));
+                    preference.setDefaultValue(Utilities.showOnlyRunningApps(context));
+                    break;
+
+                case KEY_SHRINK_NON_ADAPTIVE_ICONS:
+                    preference.setDefaultValue(Utilities.shouldShrinkNonAdaptiveIcons(context));
                     break;
 
                 case KEY_ICONS_SIZE:
                     SeekBarPreference icons = setupSeekBar(preference, 32, 96);
-                    icons.setValue(Utilities.getIconsSize(getContext(), 
+                    icons.setValue(Utilities.getIconsSize(context, 
                                    LauncherAppState.getInstanceNoCreate().getInvariantDeviceProfile().iconSize));
+                    break;
+
+                case KEY_ALL_APPS_ICONS_PADDING:
+                    SeekBarPreference allAppsIconsPadding = setupSeekBar(preference, 128, 512);
+                    allAppsIconsPadding.setValue(Utilities.getAllAppsIconsPadding(context, 
+                                   LauncherAppState.getInstanceNoCreate().getInvariantDeviceProfile().getDeviceProfile(context).iconDrawablePaddingOriginalPx));
                     break;
 
                 case KEY_NUM_ROWS:
                     SeekBarPreference rows = setupSeekBar(preference, 3, 9);
-                    rows.setValue(Utilities.getNumRows(getContext(),
+                    rows.setValue(Utilities.getNumRows(context,
                                   LauncherAppState.getInstanceNoCreate().getInvariantDeviceProfile().numRows));
                     break;
 
-               case KEY_NUM_COLS:
+                case KEY_NUM_COLS:
                     SeekBarPreference cols = setupSeekBar(preference, 3, 9);
-                    cols.setValue(Utilities.getNumCols(getContext(),
+                    cols.setValue(Utilities.getNumCols(context,
                                   LauncherAppState.getInstanceNoCreate().getInvariantDeviceProfile().numColumns));
                     break;
 
-               case KEY_HOTSEAT_ICONS:
+                case KEY_HOTSEAT_ICONS:
                     SeekBarPreference hsicons = setupSeekBar(preference, 3, 7);
-                    hsicons.setValue(Utilities.getHotseatIcons(getContext(),
+                    hsicons.setValue(Utilities.getHotseatIcons(context,
                                   LauncherAppState.getInstanceNoCreate().getInvariantDeviceProfile().numHotseatIcons));
                     break;
 
-               case KEY_ALL_APPS_COLS:
+                case KEY_ALL_APPS_COLS:
                     SeekBarPreference allAppsCols = setupSeekBar(preference, 3, 9);
-                    allAppsCols.setValue(Utilities.getAllAppsCols(getContext(),
+                    allAppsCols.setValue(Utilities.getAllAppsCols(context,
                                   LauncherAppState.getInstanceNoCreate().getInvariantDeviceProfile().numAllAppsColumns));
                     break;
             }

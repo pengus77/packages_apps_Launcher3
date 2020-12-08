@@ -33,6 +33,8 @@ import android.os.UserHandle;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.android.launcher3.IconPack;
+import com.android.launcher3.IconPackProvider;
 import com.android.launcher3.R;
 import com.android.launcher3.icons.BitmapInfo.Extender;
 import com.android.launcher3.pm.UserCache;
@@ -64,15 +66,16 @@ public class IconProvider {
     private static final BiFunction<ActivityInfo, PackageManager, Drawable> AI_LOADER =
             ActivityInfo::loadUnbadgedIcon;
 
-
     private final Context mContext;
     private final ComponentName mCalendar;
     private final ComponentName mClock;
+    private final PackageManager mPm;
 
     public IconProvider(Context context) {
         mContext = context;
         mCalendar = parseComponentOrNull(context, R.string.calendar_component_name);
         mClock = parseComponentOrNull(context, R.string.clock_component_name);
+        mPm = context.getPackageManager();
     }
 
     /**
@@ -85,6 +88,28 @@ public class IconProvider {
         } else {
             return systemState;
         }
+    }
+
+    private Drawable getIconFromPack(LauncherActivityInfo info) {
+        IconPack iconPack = IconPackProvider.loadAndGetIconPack(mContext);
+        if (iconPack != null) {
+            Drawable iconMask = iconPack.getIcon(info, null, info.getLabel());
+            if (iconMask != null) {
+                return iconMask;
+            }
+        }
+        return null;
+    }
+
+    private Drawable getIconFromPack(ActivityInfo info) {
+        IconPack iconPack = IconPackProvider.loadAndGetIconPack(mContext);
+        if (iconPack != null) {
+            Drawable iconMask = iconPack.getIcon(info, null, info.loadLabel(mPm));
+            if (iconMask != null) {
+                return iconMask;
+            }
+        }
+        return null;
     }
 
     /**
@@ -111,31 +136,31 @@ public class IconProvider {
      * Loads the icon for the provided activity info
      */
     public Drawable getIcon(ActivityInfo info, UserHandle user) {
-        return getIcon(info.applicationInfo.packageName, user, info, mContext.getPackageManager(),
+        return getIcon(info.applicationInfo.packageName, user, info, mPm,
                 AI_LOADER);
     }
 
     private <T, P> Drawable getIcon(String packageName, UserHandle user, T obj, P param,
             BiFunction<T, P, Drawable> loader) {
         Drawable icon = null;
-        if (mCalendar != null && mCalendar.getPackageName().equals(packageName)) {
-            icon = loadCalendarDrawable(0);
-        } else if (mClock != null
-                && mClock.getPackageName().equals(packageName)
-                && Process.myUserHandle().equals(user)) {
-            icon = loadClockDrawable(0);
+        if (obj instanceof LauncherActivityInfo) {
+            LauncherActivityInfo lai = (LauncherActivityInfo)obj;
+            icon = getIconFromPack(lai);
+        } else if (obj instanceof ActivityInfo) {
+            ActivityInfo info = (ActivityInfo)obj;
+            icon = getIconFromPack(info);
         }
+
         return icon == null ? loader.apply(obj, param) : icon;
     }
 
     private Drawable loadCalendarDrawable(int iconDpi) {
-        PackageManager pm = mContext.getPackageManager();
         try {
-            final Bundle metadata = pm.getActivityInfo(
+            final Bundle metadata = mPm.getActivityInfo(
                     mCalendar,
                     PackageManager.GET_UNINSTALLED_PACKAGES | PackageManager.GET_META_DATA)
                     .metaData;
-            final Resources resources = pm.getResourcesForApplication(mCalendar.getPackageName());
+            final Resources resources = mPm.getResourcesForApplication(mCalendar.getPackageName());
             final int id = getDynamicIconId(metadata, resources);
             if (id != NO_ID) {
                 if (DEBUG) Log.d(TAG, "Got icon #" + id);

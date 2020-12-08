@@ -17,10 +17,16 @@
 package com.android.launcher3.icons;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
+import android.os.UserHandle;
 
 import com.android.launcher3.InvariantDeviceProfile;
+import com.android.launcher3.Utilities;
 import com.android.launcher3.graphics.IconShape;
 import com.android.launcher3.graphics.LauncherPreviewRenderer;
+
+import androidx.annotation.NonNull;
 
 /**
  * Wrapper class to provide access to {@link BaseIconFactory} and also to provide pool of this class
@@ -72,11 +78,13 @@ public class LauncherIcons extends BaseIconFactory implements AutoCloseable {
     private final int mPoolId;
 
     private LauncherIcons next;
+    private Context mContext;
 
     protected LauncherIcons(Context context, int fillResIconDpi, int iconBitmapSize, int poolId,
             boolean shapeDetection) {
         super(context, fillResIconDpi, iconBitmapSize, shapeDetection);
         mPoolId = poolId;
+        mContext = context;
     }
 
     /**
@@ -93,6 +101,18 @@ public class LauncherIcons extends BaseIconFactory implements AutoCloseable {
             next = sPool;
             sPool = this;
         }
+    }
+
+    @Override
+    public Bitmap createScaledBitmapWithoutShadow(Drawable icon, boolean shrinkNonAdaptiveIcons) {
+        return super.createScaledBitmapWithoutShadow(icon, Utilities.shouldShrinkNonAdaptiveIcons(mContext));
+    }
+
+    @Override
+    public BitmapInfo createBadgedIconBitmap(@NonNull Drawable icon, UserHandle user,
+            boolean shrinkNonAdaptiveIcons, boolean isInstantApp, float[] scale) {
+        return super.createBadgedIconBitmap(icon, user, Utilities.shouldShrinkNonAdaptiveIcons(mContext),
+                isInstantApp, scale);
     }
 
     @Override
