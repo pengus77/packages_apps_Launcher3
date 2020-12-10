@@ -374,17 +374,15 @@ public class DeviceProfile {
             allAppsIconTextSizePx = Utilities.pxFromSp(inv.allAppsIconTextSize, mInfo.metrics);
             allAppsIconDrawablePaddingPx = iconDrawablePaddingOriginalPx;
             // We use 4 below to ensure labels are closer to their corresponding icon.
-            allAppsCellHeightPx = Math.round(allAppsIconSizePx + allAppsIconTextSizePx
-                    + (4 * allAppsIconDrawablePaddingPx));
+            allAppsCellHeightPx = Utilities.getAllAppsIconsPadding(mContext, Math.round(allAppsIconSizePx + allAppsIconTextSizePx
+                    + (4 * allAppsIconDrawablePaddingPx)));
         } else {
             allAppsIconSizePx = iconSizePx;
             allAppsIconTextSizePx = iconTextSizePx;
             allAppsIconDrawablePaddingPx = iconDrawablePaddingPx;
-            allAppsCellHeightPx = getCellSize().y;
+            allAppsCellHeightPx = Utilities.getAllAppsIconsPadding(mContext, getCellSize().y);
         }
         allAppsCellWidthPx = allAppsIconSizePx + allAppsIconDrawablePaddingPx;
-
-        allAppsCellHeightPx = Utilities.getAllAppsIconsPadding(mContext, allAppsCellHeightPx);
 
         if (isVerticalBarLayout()) {
             // Always hide the Workspace text with vertical bar layout.

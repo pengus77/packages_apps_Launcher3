@@ -307,7 +307,7 @@ public class SettingsActivity extends FragmentActivity
                 case KEY_ALL_APPS_ICONS_PADDING:
                     SeekBarPreference allAppsIconsPadding = setupSeekBar(preference, 128, 512);
                     allAppsIconsPadding.setValue(Utilities.getAllAppsIconsPadding(context, 
-                                   LauncherAppState.getInstanceNoCreate().getInvariantDeviceProfile().getDeviceProfile(context).iconDrawablePaddingOriginalPx));
+                                   LauncherAppState.getInstanceNoCreate().getInvariantDeviceProfile().getDeviceProfile(context).allAppsCellHeightPx));
                     break;
 
                 case KEY_NUM_ROWS:
