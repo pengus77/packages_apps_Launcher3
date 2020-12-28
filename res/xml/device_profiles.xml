@@ -18,70 +18,13 @@
 <profiles xmlns:launcher="http://schemas.android.com/apk/res-auto" >
 
     <grid-option
-        launcher:defaultLayoutId="@xml/default_workspace_3x3"
-        launcher:name="3_by_3"
-        launcher:numColumns="3"
-        launcher:numFolderColumns="2"
-        launcher:numFolderRows="2"
-        launcher:numHotseatIcons="3"
-        launcher:dbFile="launcher_3_by_3.db"
-        launcher:numAllAppsColumns="3"
-        launcher:numRows="3">
-
-        <display-option
-            launcher:iconImageSize="76.0"
-            launcher:iconTextSize="14.0"
-            launcher:landscapeIconSize="76.0"
-            launcher:minHeightDps="659.0"
-            launcher:minWidthDps="387.0"
-            launcher:name="Pixel" />
-
-        <display-option
-            launcher:iconImageSize="88.0"
-            launcher:iconTextSize="16.0"
-            launcher:landscapeIconSize="88.0"
-            launcher:minHeightDps="754.0"
-            launcher:minWidthDps="449.0"
-            launcher:name="Pixel (Display : Largest)" />
-    </grid-option>
-
-    <grid-option
-        launcher:defaultLayoutId="@xml/default_workspace_4x4"
-        launcher:name="4_by_4"
-        launcher:numColumns="4"
-        launcher:numFolderColumns="4"
-        launcher:numFolderRows="3"
-        launcher:numHotseatIcons="4"
-        launcher:dbFile="launcher_4_by_4.db"
-        launcher:numAllAppsColumns="4"
-        launcher:numRows="4">
-
-        <display-option
-            launcher:canBeDefault="true"
-            launcher:iconImageSize="52.0"
-            launcher:iconTextSize="11.0"
-            launcher:landscapeIconSize="52.0"
-            launcher:minHeightDps="496.0"
-            launcher:minWidthDps="296.0"
-            launcher:name="Pixel (Display : Small)" />
-
-        <display-option
-            launcher:iconImageSize="72.0"
-            launcher:iconTextSize="14.0"
-            launcher:landscapeIconSize="72.0"
-            launcher:minHeightDps="754.0"
-            launcher:minWidthDps="449.0"
-            launcher:name="Pixel (Display : Largest)" />
-    </grid-option>
-
-    <grid-option
         launcher:name="4_by_5"
         launcher:numRows="5"
         launcher:numColumns="4"
         launcher:numFolderRows="4"
         launcher:numFolderColumns="4"
         launcher:numHotseatIcons="4"
-        launcher:dbFile="launcher_4_by_5.db"
+        launcher:dbFile="launcher.db"
         launcher:numAllAppsColumns="4"
         launcher:defaultLayoutId="@xml/default_workspace_4x5" >
 
@@ -154,45 +97,4 @@
             launcher:canBeDefault="true" />
     </grid-option>
 
-    <grid-option
-        launcher:name="5_by_7"
-        launcher:numRows="7"
-        launcher:numColumns="5"
-        launcher:numFolderRows="6"
-        launcher:numFolderColumns="4"
-        launcher:numHotseatIcons="5"
-        launcher:dbFile="launcher_5_by_7.db"
-        launcher:numAllAppsColumns="5"
-        launcher:defaultLayoutId="@xml/default_workspace_5x7" >
-
-        <display-option
-            launcher:name="Large Phone"
-            launcher:minWidthDps="406"
-            launcher:minHeightDps="694"
-            launcher:iconImageSize="56"
-            launcher:iconTextSize="13.0"
-            launcher:canBeDefault="true" />
-    </grid-option>
-
-    <grid-option
-        launcher:name="6_by_6"
-        launcher:numRows="6"
-        launcher:numColumns="6"
-        launcher:numFolderRows="5"
-        launcher:numFolderColumns="5"
-        launcher:numHotseatIcons="6"
-        launcher:dbFile="launcher_6_by_6.db"
-        launcher:numAllAppsColumns="6"
-        launcher:defaultLayoutId="@xml/default_workspace_6x6" >
-
-        <display-option
-            launcher:name="Large Phone"
-            launcher:minWidthDps="406"
-            launcher:minHeightDps="694"
-            launcher:iconImageSize="52"
-            launcher:iconTextSize="13.0"
-            launcher:canBeDefault="true" />
-
-    </grid-option>
- 
 </profiles>
